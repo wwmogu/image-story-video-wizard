@@ -74,11 +74,11 @@ Each stage has five fields:
 
 **Enter when:** SCRIPT is confirmed.
 
-**Skill acts:** check whether a chosen TTS service is locally configured. If access is missing, guide the user through the current official application and local configuration path, verifying the official instructions when they may have changed; never request the plaintext key. For the established Doubao path, use current Seed-TTS 2.0 rather than a legacy generation. Select a representative approximately twenty-second sample and generate five to ten same-text voice auditions. After voice selection, generate a small set of rate auditions.
+**Skill acts:** check whether a chosen TTS service is locally configured. If access is missing, guide the user through the current official application and local configuration path, verifying the official instructions when they may have changed; never request the plaintext key. For the established Doubao path, use current Seed-TTS 2.0 rather than a legacy generation. Select a representative approximately twenty-second sample and generate five to ten same-text voice auditions. After voice selection, generate a small set of rate auditions. Prefer the provider's documented subtitle/word-timestamp response (including an SSE event stream when that is the documented interface); save audio, sanitized metadata, and raw timing events before deriving SRT/ASS. Use text weights, `silencedetect`, or a uniform lead only as a recorded fallback.
 
 **Ask now:** first ask whether access is configured, without requesting plaintext credentials. Then ask the user to choose the best voice; only after that ask for rate preference.
 
-**Deliver:** voice audition set, confirmed voice/rate record, final narration, and sentence- or word-level timestamps when available.
+**Deliver:** voice audition set, confirmed voice/rate record, final narration, the native timing event stream when available, and derived SRT/ASS. Record why a fallback timing method was used when native timestamps are unavailable.
 
 **Gate:** user confirms voice and full narration. Do not treat model or parameter suggestions as acceptance.
 
@@ -158,7 +158,7 @@ Each stage has five fields:
 
 **Enter when:** ASSET_QC is confirmed.
 
-**Skill acts:** ask whether music is needed. If no, mark `已跳过`. If yes, generate or source two to three short audition candidates within the authorized tool path, then plan a low-presence bed or a few emotion components. Narration remains dominant.
+**Skill acts:** ask whether music is needed. If no, mark `已跳过` and record `music: skipped` in decisions. If yes, generate or source two to three short audition candidates within the authorized tool path, then plan a low-presence bed or a few emotion components. Narration remains dominant.
 
 **Ask now:** ask whether to skip music; if not, ask the user to choose from auditions.
 
@@ -170,9 +170,9 @@ Each stage has five fields:
 
 **Enter when:** images are confirmed and music is confirmed or skipped.
 
-**Skill acts:** assemble the project, preferably with HyperFrames when available. In a host with the bundled HyperFrames skills, load the `hyperframes` mandatory entry point before touching the composition and follow its routing instructions. Align images, subtitles, text cards, and music to narration timestamps. Run structural checks and create a reviewable preview. Do not final-render yet.
+**Skill acts:** assemble the project, preferably with HyperFrames when available. In a host with the bundled HyperFrames skills, load the `hyperframes` mandatory entry point before touching the composition and follow its routing instructions. Align images, subtitles, text cards, and music to narration timestamps. For motion repair, create an opening probe from a clean visual base, use the motion ledger, and keep the probe on a separate versioned path. Run structural checks and create a reviewable preview. Do not final-render yet.
 
-**Ask now:** tell the user what to review: opening minute, chapter transitions, character first appearances, text/subtitle collisions, and ending. Ask for specific changes or approval.
+**Ask now:** first request one decision on the opening probe: motion/transition accepted, or one named defect and time range. After that gate, tell the user what to review in the preview: opening minute, chapter transitions, character first appearances, text/subtitle collisions, and ending. Ask for specific changes or approval.
 
 **Deliver:** preview, review board or representative frames, and issue list.
 
@@ -182,7 +182,7 @@ Each stage has five fields:
 
 **Enter when:** PREVIEW is confirmed.
 
-**Skill acts:** render the master, validate container/audio/video properties, extract representative frames from the final file, and watch or request a full human watch. Preserve the editable project.
+**Skill acts:** render the master, validate container/audio/video properties, extract representative frames from the final file, and watch or request a full human watch. If narration was regenerated or its duration changed, remap the clean visual at the delivery frame level while preserving cover duration, then recompute duration, stream parameters, and decode checks. Preserve the editable project and prior candidates.
 
 **Ask now:** ask for acceptance after presenting the actual master and checks. Do not publish automatically.
 

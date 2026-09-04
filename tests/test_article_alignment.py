@@ -16,6 +16,9 @@ OPENAI_YAML = ROOT / "agents" / "openai.yaml"
 WORKFLOW = ROOT / "references" / "workflow.md"
 HOST_ROUTING = ROOT / "references" / "host-routing.md"
 STATE_SCRIPT = ROOT / "scripts" / "project_state.py"
+MOTION_VALIDATOR = ROOT / "scripts" / "validate_motion_ledger.py"
+MOTION_TEMPLATE = ROOT / "assets" / "motion-ledger-template.csv"
+QUALITY_PLAYBOOK = ROOT / "references" / "audio-motion-quality-playbook.md"
 
 STAGES = (
     "START",
@@ -56,6 +59,9 @@ class ArticleAlignmentTests(unittest.TestCase):
             "references/state-schema.md",
             "references/workflow.md",
             "scripts/project_state.py",
+            "scripts/validate_motion_ledger.py",
+            "assets/motion-ledger-template.csv",
+            "references/audio-motion-quality-playbook.md",
         )
         for relative in required:
             self.assertTrue((ROOT / relative).is_file(), relative)
@@ -153,6 +159,7 @@ class ArticleAlignmentTests(unittest.TestCase):
             state = json.loads(state_file.read_text(encoding="utf-8"))
             self.assertEqual("START", state["current_stage"])
             self.assertEqual("BRIEF", state["next_stage"])
+            self.assertTrue((project / "preview").is_dir())
 
             validate = subprocess.run(
                 [sys.executable, str(STATE_SCRIPT), "validate", str(state_file)],
@@ -179,6 +186,54 @@ class ArticleAlignmentTests(unittest.TestCase):
                 check=False,
             )
             self.assertEqual(2, overwrite.returncode)
+
+    def test_quality_branch_is_linked_and_ledger_validator_works(self) -> None:
+        skill = SKILL.read_text(encoding="utf-8")
+        playbook = QUALITY_PLAYBOOK.read_text(encoding="utf-8")
+        self.assertIn("audio-motion-quality-playbook.md", skill)
+        for phrase in (
+            "clean visual base",
+            "opening probe",
+            "native word-level TTS timestamps",
+            "preserving cover duration",
+            "music: skipped",
+        ):
+            self.assertIn(phrase, playbook)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            ledger = Path(temp_dir) / "ledger.csv"
+            header = MOTION_TEMPLATE.read_text(encoding="utf-8").strip()
+            ledger.write_text(
+                header
+                + "\n"
+                + "probe-v01,V01,待确认,clean-base,preview/clean.mp4,preview/motion-v01/probe.mp4,1080,1920,4,60,900,2.0,15.0,extreme-slow-one-way,pure gradient,true,scale+crop,audio/probe.wav,audio/probe.metadata.json,audio/probe.events.jsonl,native-word-timestamps,ffprobe+ffmpeg decode,pass,accepted opening probe\n",
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                [sys.executable, str(MOTION_VALIDATOR), str(ledger)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual("VALID", result.stdout.strip())
+
+            bad_ledger = Path(temp_dir) / "bad-ledger.csv"
+            bad_ledger.write_text(
+                header
+                + "\n"
+                + "probe-v00,V00,待确认,motion-output,preview/motion-v00.mp4,preview/motion-v00/bad.mp4,1080,1920,1,30,450,2.0,15.0,zoompan,pure gradient,false,zoompan+blur,audio/probe.wav,audio/probe.metadata.json,audio/probe.events.jsonl,weighted-text,ffprobe,fail,\n",
+                encoding="utf-8",
+            )
+            bad_result = subprocess.run(
+                [sys.executable, str(MOTION_VALIDATOR), str(bad_ledger)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertNotEqual(0, bad_result.returncode)
+            self.assertIn("base_kind must identify a clean base", bad_result.stderr)
+            self.assertIn("prohibited filter", bad_result.stderr)
 
 
 if __name__ == "__main__":

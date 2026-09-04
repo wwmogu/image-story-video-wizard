@@ -69,6 +69,20 @@ git clone https://github.com/aaronyi97/image-story-video-wizard.git ~/.codex/ski
 - 生图：先做 3–5 张样图，然后锁画风、人物母版和文字样式。手动路线默认一个新对话只跑一条提示词、生成一张图。
 - 剪辑：素材齐全后优先使用 HyperFrames 组装，先看预览，确认后再渲染最终成片。
 
+## 音频优先质量分支
+
+如果预览出现抖动、卡顿、转场混动或字幕漂移，读取
+`references/audio-motion-quality-playbook.md`。它要求从 clean visual base 开始
+做版本化实验，优先原生字级时间戳，先验收开头探针，再生成完整旁白、字幕和
+母版；旧实验只标记 stale/needs rework，不覆盖或删除。动效 ledger 可用下面的
+命令做结构校验：
+
+```bash
+python3 scripts/validate_motion_ledger.py preview/motion-v01/ledger.csv
+```
+
+没有背景音乐或发布文案/封面要求时，也应在项目状态中记录为已跳过或未请求。
+
 豆包语音入口：
 
 - [豆包语音官方产品页](https://www.volcengine.com/products/Audio-editing-and-sound-processing)

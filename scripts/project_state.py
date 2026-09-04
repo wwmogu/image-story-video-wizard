@@ -35,6 +35,7 @@ STATUSES = ("未开始", "进行中", "待确认", "已确认", "需要返工", 
 PROJECT_DIRS = (
     "writing-pack",
     "audio",
+    "preview",
     "characters",
     "images/references",
     "images/generated",

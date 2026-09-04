@@ -63,6 +63,42 @@
 6. Never store plaintext API keys, cookies, login URLs, redemption codes, or tokens.
 7. When returning to an earlier stage, do not delete downstream artifacts. Mark them in `artifacts` as `stale: true` until regenerated or re-confirmed.
 
+## Quality-branch records
+
+The base schema remains compatible with existing projects. Store quality-branch
+facts inside the existing `decisions` and `artifacts` objects; do not add secrets or
+provider session data. Useful records include:
+
+```json
+{
+  "decisions": {
+    "music": {"value": "skipped", "source": "user", "status": "已确认"},
+    "release_copy_cover": {"value": "not requested", "source": "user", "status": "已确认"},
+    "timing_source": {"value": "native-word-timestamps", "source": "tts-response", "status": "已确认"}
+  },
+  "artifacts": {
+    "motion_probe_v01": {
+      "path": "/absolute/project/preview/motion-v01/probe.mp4",
+      "base": "/absolute/project/preview/clean-visual.mp4",
+      "ledger": "/absolute/project/preview/motion-v01/ledger.csv",
+      "status": "已做待验",
+      "stale": false
+    },
+    "old-motion-experiment": {
+      "path": "/absolute/project/preview/motion-v00/old.mp4",
+      "status": "stale",
+      "stale": true,
+      "needs_rework": true
+    }
+  }
+}
+```
+
+For motion records, the ledger is the source of truth for the clean base, filter
+profile, internal canvas, fps, frame count, transition freeze, validation result,
+and human verdict. Keep provider-specific timing payloads in a project-local file
+with secrets removed; keep only its path and method in state.
+
 ## Resume behavior
 
 On resume:

@@ -77,6 +77,37 @@ If a gate fails, mark `需要返工`, return only to the earliest affected stage
 - Produce a reviewable preview before final render. Machine checks do not replace visual inspection and one full human watch.
 - Keep delivery status `已做待验` until the user accepts the final master.
 
+## Audio-first quality branch
+
+When a project has narration, subtitles, or reported motion/transition defects, read
+[references/audio-motion-quality-playbook.md](references/audio-motion-quality-playbook.md)
+before changing the assembly. This branch preserves the normal stage gates and adds
+one opening probe gate:
+
+- Start every motion experiment from an explicitly recorded clean visual base. Never
+  promote an old motion experiment into the next experiment's base; preserve it and
+  mark it `stale` or `needs rework`.
+- Treat `zoompan`, pan, blur, breathing/breathe, and shake as prohibited in the
+  stable recovery profile. Prefer a fixed 4x internal canvas, 60fps, and an extremely
+  slow one-way scale; a static image plus pure dissolve is the fallback control.
+- During a pure gradient/cross-dissolve, freeze both outgoing and incoming frames;
+  resume single-image motion only after the transition. Render subtitles after any
+  temporal processing.
+- Prefer provider-documented native word-level TTS timestamps. Save the audio,
+  sanitized metadata, and timestamp event stream before generating SRT/ASS. Text
+  weights, `silencedetect`, and a uniform lead are fallback methods only.
+- If a new narration duration changes, retime the clean visual at the 60fps frame
+  level while preserving cover duration; never attach new audio to an old visual
+  timeline without remapping and revalidating it.
+- Use the opening probe -> user confirmation -> full narration -> complete subtitles
+  -> master -> user acceptance sequence. Record explicit `skipped` decisions for
+  music and release copy/cover requirements when they are not in scope.
+
+Use `assets/motion-ledger-template.csv` for experiment records and validate a
+candidate ledger with `scripts/validate_motion_ledger.py` before promotion. The
+playbook contains provider-neutral schemas and commands; do not invent an endpoint
+or claim native timestamps unless the current provider documents and returns them.
+
 ## Secrets and external actions
 
 Do not store API keys, session URLs, redemption codes, cookies, or tokens in prompts, project files, logs, screenshots, or repositories. Ask whether access is configured, not for the plaintext secret.
