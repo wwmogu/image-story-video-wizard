@@ -3,3 +3,6 @@ __pycache__/
 *.py[cod]
 .env
 .env.*
+
+# 用户本地频道索引，不随公开仓库分发
+references/local-channels.md

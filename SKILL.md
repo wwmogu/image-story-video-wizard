@@ -51,9 +51,9 @@ If a gate fails, mark `需要返工`, return only to the earliest affected stage
 ### Script
 
 - Learn a benchmark's topic logic, structure, pace, hooks, transitions, and audience need; never copy its original wording or finished assets.
-- Build a self-contained writing pack. Prefer complete benchmark samples over adjective-only style instructions.
-- Require one complete first draft. If it is too short or hollow, repair the writing pack and start a fresh writing conversation; do not ask the writer model to pad the same draft.
-- After draft generation, use one focused repair pass. Large rewrites require a clear reason and user confirmation.
+- At WRITING_PACK and SCRIPT, read [writing and review](references/writing-and-review.md). Keep reusable writer rules, the current channel/language with selected examples, and episode materials separate inside one self-contained package.
+- Require one complete first draft; do not pad for length. A complete but slightly short draft can be reviewed as-is. A hollow draft or missing necessary material calls for repairing the package, not decorative expansion.
+- The original guiding conversation gives a focused edit list; the chosen writer performs local repairs. Compare the returned text against the list, then stop for user acceptance. Large rewrites require a clear reason and user confirmation.
 
 ### Voice
 

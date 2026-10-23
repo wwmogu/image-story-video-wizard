@@ -23,6 +23,8 @@ Use Codex as the continuous host when local files, required tools, and render ca
 
 If a required external model or service is unavailable, do not substitute silently. Create a bounded user action or handoff package.
 
+For writing, keep the original guiding conversation as the reviewer and the user's chosen model as the author. Follow [writing and review](writing-and-review.md): the guiding conversation sends specific local edit instructions, the writer returns the full revision, and the guiding conversation checks the actual changes before user acceptance. A file handoff does not authorize the reviewer to replace the author's voice or expand into a rewrite.
+
 ## WorkBuddy route
 
 WorkBuddy may own early stages when it can analyze benchmarks, build or consume a writing pack, and use Kimi K3. For the tutorial route, select Kimi K3, turn on Max mode, choose the strongest available thinking setting such as `超高`, and use the 1M context window when those controls are actually visible. Confirm the selected model, mode, thinking strength, and context window before claiming Kimi K3 participated; if the product labels or available options have changed, state the nearest verified substitute instead of pretending the original setting is still available.

@@ -38,23 +38,23 @@ Each stage has five fields:
 
 **Enter when:** BRIEF is confirmed.
 
-**Skill acts:** obtain two to five relevant benchmark links, transcripts, or files; assign each a role such as product/business model, script and voice, visual style, or negative example. If the user has none, offer a bounded read-only research pass rather than asking them to solve discovery alone.
+**Skill acts:** first explain that benchmark selection will directly shape script quality and downstream presentation. Prioritize user-supplied benchmarks or selection criteria: ask for the accounts or works the user genuinely wants to learn from, or at least the direction and qualities they want screened. Analyze those materials when provided. Only when the user is unwilling or unable to provide either, perform a bounded public read-only search and return at least two benchmark candidates with clear reasons.
 
-**Ask now:** request the benchmark materials or authorization for read-only research. Then ask which observed qualities the user actually wants to learn.
+**Ask now:** ask the user for specific learning targets or concrete screening direction. Make clear that this is a high-impact decision, not routine material collection. If the user cannot or does not want to provide them, say that the Skill can search and recommend candidates instead. Do not silently choose a direction and continue.
 
-**Deliver:** `BENCHMARKS.md` with role, evidence, learn/avoid decisions, and rights boundary.
+**Deliver:** `BENCHMARKS.md` with source, role, evidence, learn/avoid decisions, recommendation, and rights boundary.
 
-**Gate:** user confirms benchmark roles. Learning never means copying exact wording, images, audio, or finished footage.
+**Gate:** user carefully confirms benchmark roles after seeing the evidence and recommendation. Do not start WRITING_PACK before this decision. Learning never means copying exact wording, images, audio, or finished footage.
 
 ## WRITING_PACK
 
 **Enter when:** BENCHMARKS is confirmed.
 
-**Skill acts:** build a self-contained `writing-pack/` containing the current assignment, researched materials, benchmark samples, extracted structure and voice rules, length target, interaction rules, and a one-pass/no-padding instruction. Research retains sources; the writer sees only the attribution needed in the final script.
+**Skill acts:** read [writing and review](writing-and-review.md), then use `assets/writing-pack-manifest.md` to build one self-contained package with the reusable writer rules, only the current channel/language profile and selected examples, and the episode task/materials. Read the channel's existing feedback before selecting examples. Preserve source evidence and mark what may enter narration. Supply needed information and causal relationships instead of prewritten editorial metaphors, forced paragraph formulas, or numerical style quotas.
 
 **Ask now:** ask only for source material that cannot be found in scope and one decision about the desired benchmark emphasis.
 
-**Deliver:** writing-pack manifest and archive. Do not expose secrets or internal paths in public-facing materials.
+**Deliver:** the populated writing package and manifest, as a merged file or archive with actual content. Record the package and channel-profile versions. Do not expose secrets or internal paths in public-facing materials.
 
 **Gate:** user confirms the package direction, not every line of source material.
 
@@ -62,13 +62,13 @@ Each stage has five fields:
 
 **Enter when:** WRITING_PACK is confirmed.
 
-**Skill acts:** route the package to the available writing model. WorkBuddy/Kimi K3 is a preferred route when verified; otherwise use an available writer without falsely claiming Kimi participated. Require one complete draft. Return the draft to the guiding host for one focused review using add/delete/local-repair instructions.
+**Skill acts:** follow [writing and review](writing-and-review.md). Preserve the user's chosen writing model; when Kimi K3 is specified, use it if available or provide the user a self-contained handoff instead of silently substituting. Preserve one complete first draft. The original guiding conversation identifies concrete issues and protected passages, then provides one copyable, bounded edit list for the writer. When the revision returns, compare actual body changes with that list, check for new errors or damaged transitions, and stop after those issues are resolved; do not begin another general style review.
 
-**Ask now:** after the draft exists, ask the user to mark specific disliked passages or confirm the whole script. Do not ask the user to redesign the workflow.
+**Ask now:** use the already stated preferences to review the draft and prepare the edit list without asking the user to find all problems. Give the user the ready-to-forward instruction when the writer is in another conversation. Request a user decision only for a necessary scope change, missing fact, or final acceptance. Do not ask the user to redesign the workflow.
 
-**Deliver:** `SCRIPT.md`, estimated narration length, and a short unresolved-facts list if needed.
+**Deliver:** preserved original body, `review/SCRIPT-REVIEW.md` with issues/actions/protected scope, the writer's complete revised `SCRIPT.md`, and a short result of the change comparison. Use fresh filenames if originals already exist. Keep counting and unresolved facts separate from narration, and record the user's actual feedback in the channel profile or project feedback file.
 
-**Gate:** final script is `已确认`. If the draft is hollow or badly short, mark `需要返工`, repair WRITING_PACK, and start a fresh writing conversation. Do not perform second-round padding.
+**Gate:** the user confirms the final script before marking it `已确认`. A complete but slightly short draft may be accepted without padding; a hollow draft or necessary material gap is `需要返工` and returns to WRITING_PACK. Large restructuring needs a specific reason and the user's decision. Do not perform second-round padding.
 
 ## VOICE
 
@@ -194,7 +194,7 @@ Each stage has five fields:
 
 **Enter when:** the user later provides real platform results.
 
-**Skill acts:** record actual production time, manual intervention, playback/retention/feedback data, and identify the smallest workflow change for the next episode. For a new account with 7–15 days of weak results, review topic choice and script first, then present an evidence-based choice between changing the niche and repairing those inputs. After three to five stable, accepted scripts exist, offer to extract the channel's own writing template or Skill. Do not infer performance from render success or freeze a channel template from one sample.
+**Skill acts:** record actual production time, manual intervention, playback/retention/feedback data, and identify the smallest workflow change for the next episode. Follow [writing and review](writing-and-review.md) to retain actual wording corrections and user judgments in the channel profile; select only relevant, current lessons for later packs. For a new account with 7–15 days of weak results, review topic choice and script first, then present an evidence-based choice between changing the niche and repairing those inputs. After three to five stable, accepted scripts exist, offer to extract the channel's own writing template or Skill. Do not infer performance from render success, treat merely used scripts as gold samples, or freeze a channel template from one sample.
 
 **Ask now:** request only the available real results and the user's qualitative judgment.
 

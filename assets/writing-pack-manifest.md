@@ -1,34 +1,39 @@
-# Writing pack manifest
+# 写作包清单
 
-## Assignment
+组包模板，版本 1.2（2026-09-14）。组包人先读 [写作与审稿规范](../references/writing-and-review.md)，填入实际内容后再交付；本模板的说明不作为旁白。
 
-- Topic:
-- Target audience:
-- Target duration or length:
-- Required delivery:
+## 本次任务
 
-## Included files
+- 选题与要回答的问题：
+- 频道、目标语言、原生写作或忠实改编，叙述方式及必要的揭示安排：
+- 写作模型（沿用用户已选模型）：
+- 听众与听读场景：
+- 内容范围、必要节点、材料或加工边界：
+- 正文篇幅预算与计数口径；时长估算依据：
+- 输出内容（默认完整正文，其他按需）：
+- 初稿返回哪个原对话审稿：
+- 本包版本、采用的频道档案版本：
+- 用户指定的频道/本期软目标（如“酌情约几处”），与硬约束分开写：
 
-| File | Purpose | Visible to writer |
+## 内容与读取顺序
+
+可合并成一份文档，也可分成以下文件；同一内容只维护一处，附件带实际文本。
+
+| 顺序 | 内容/建议文件 | 用途 |
 |---|---|---|
+| 1 | `00-TASK.md` | 本次任务、输出范围、读取顺序和交稿去向 |
+| 2 | `02-CHANNEL.md` 与必要样本 | 当前频道与语言要求，精选连续好段/完整样本、适用的修改对照与评价 |
+| 3 | `03-MATERIALS.md` | 可讲事件与制作备注分开，保留依据及事实性质；按频道附本期实际看点/趣味素材，需要时附原文与来源索引 |
+| 4 | `01-WRITER-RULES.md` | 放入 `assets/writer-rules.md` 的实际全文，写前最后核对 |
 
-## Benchmark lessons
+频道资料从现有 `CHANNEL-WRITING.md` 或同等档案中选取；不把全量反馈历史、无关频道内容、原对话审稿方法或历史单集规则附给写手。需要结构时只交代信息和因果，不复制段尾金句、强制路线图和固定回收位置。
 
-- Learn:
-- Avoid:
-- Never copy:
+## 交付前核对（组包人执行）
 
-## Writing behavior
-
-- Produce one complete first draft.
-- Do not perform second-round padding.
-- If the target cannot be met from supplied material, report the missing material instead of expanding with repetition.
-- Keep research evidence separate from the spoken script unless attribution is required.
-
-## Acceptance
-
-- Opening:
-- Narrative movement:
-- Spoken clarity:
-- Length:
-- Prohibited patterns:
+- 任务、材料、范例的作用清楚，没有互相冲突的要求。
+- 用户指定的软目标与硬约束区分，没有组包人自创的句数、词频、回收或修改比例。
+- 频道要求的事件经过、关系变化与趣味材料已实际提供；没有把“写得有趣”当供给，也没有把出处备注混成事件正文。
+- 样本状态准确；采用过的全文不自动标成金样。
+- 已实际阅读所附材料；路径引用不能代替附件内容。
+- 默认完整交稿，不要求表功式自检，不自动补字数。
+- 需要小修时由原对话给具体修改单，Kimi 执行后回原对话核对，再由用户确认。

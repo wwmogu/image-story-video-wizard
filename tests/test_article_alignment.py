@@ -136,6 +136,19 @@ class ArticleAlignmentTests(unittest.TestCase):
         self.assertIn("7–15 days", self.workflow)
         self.assertIn("three to five stable, accepted scripts", self.workflow)
 
+    def test_benchmark_selection_is_user_led_with_agent_search_as_fallback(self) -> None:
+        start = self.workflow.index("## BENCHMARKS")
+        end = self.workflow.index("## WRITING_PACK")
+        section = self.workflow[start:end]
+        lower_section = section.lower()
+
+        self.assertIn("prioritize user-supplied benchmarks or selection criteria", lower_section)
+        self.assertIn("unwilling or unable to provide either", section)
+        self.assertIn("at least two benchmark candidates", section)
+        self.assertIn("directly shape script quality and downstream presentation", section)
+        self.assertIn("carefully confirm", section)
+        self.assertNotIn("never make finding links or examples the user's homework", section)
+
     def test_state_cli_initializes_and_validates(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             project = Path(temp_dir) / "sample"
